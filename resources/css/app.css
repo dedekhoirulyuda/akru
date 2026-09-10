@@ -1,0 +1,92 @@
+/*
+ * AKRU — Application Styles
+ * Accounting, Finance & Tax Control
+ *
+ * Design: Professional, modern, clean, compact, data-first.
+ * Blueprint §3.1: "Desain harus profesional, modern, ringan, clean, compact, dan data-first."
+ */
+
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+    /* AKRU Brand Colors */
+    --color-akru-50: #eff6ff;
+    --color-akru-100: #dbeafe;
+    --color-akru-200: #bfdbfe;
+    --color-akru-300: #93c5fd;
+    --color-akru-400: #60a5fa;
+    --color-akru-500: #3b82f6;
+    --color-akru-600: #2563eb;
+    --color-akru-700: #1d4ed8;
+    --color-akru-800: #1e40af;
+    --color-akru-900: #1e3a8a;
+}
+
+/* ============================================================
+   AKRU Custom Utilities
+   ============================================================ */
+
+/* Hide scrollbar but keep scrolling */
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* Glassmorphism card */
+.glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Data table compact rows */
+.table-compact td,
+.table-compact th {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8125rem;
+    line-height: 1.25rem;
+}
+
+/* Amount / money formatting */
+.text-money {
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+}
+
+/* Status badge base */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.125rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+}
+
+/* Print-specific */
+@media print {
+    .no-print { display: none !important; }
+    .print-only { display: block !important; }
+}
+
+/* Alpine.js cloak */
+[x-cloak] {
+    display: none !important;
+}
+
+/* Smooth transitions for sidebar */
+.sidebar-transition {
+    transition: width 300ms ease-in-out;
+}

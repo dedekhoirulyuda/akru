@@ -1,0 +1,74 @@
+@extends('layouts.pdf')
+
+@section('title', 'Register Penerimaan Pembayaran — ' . ($currentCompany->name ?? 'AKRU'))
+
+@section('report-header')
+<div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <div>
+        <div class="company-name">{{ $currentCompany->name ?? session('active_company_name', 'PT AKRU MAJU BERSAMA') }}</div>
+        <div class="meta">NPWP: {{ $currentCompany->npwp ?? '-' }} | {{ $currentCompany->address ?? 'Indonesia' }}</div>
+    </div>
+    <div style="text-align: right;">
+        <h2 style="font-size: 14pt; font-weight: bold; color: #1e293b; margin-bottom: 4px;">REGISTER PENERIMAAN PEMBAYARAN PIUTANG</h2>
+        <div class="meta">Tanggal Cetak: {{ now()->format('d/m/Y H:i') }}</div>
+    </div>
+</div>
+@endsection
+
+@section('content')
+<table style="width: 100%; margin-top: 15px;">
+    <thead>
+        <tr>
+            <th style="width: 30px; text-align: center;">No.</th>
+            <th style="width: 140px;">No. Penerimaan</th>
+            <th style="width: 80px; text-align: center;">Tanggal</th>
+            <th>Pelanggan</th>
+            <th style="width: 130px;">Rekening Masuk</th>
+            <th style="width: 85px; text-align: center;">Metode</th>
+            <th style="width: 130px; text-align: right;">Jumlah (Rp)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @forelse($receipts as $idx => $r)
+        <tr>
+            <td style="text-align: center; font-size: 8pt;">{{ $idx + 1 }}</td>
+            <td style="font-family: monospace; font-weight: 600;">{{ $r->receipt_number }}</td>
+            <td style="text-align: center;">{{ $r->receipt_date ? $r->receipt_date->format('d/m/Y') : '-' }}</td>
+            <td>{{ $r->contact->name ?? '-' }}</td>
+            <td>{{ $r->bankAccount->bank_name ?? '-' }}</td>
+            <td style="text-align: center; font-size: 8pt;">{{ strtoupper($r->payment_method) }}</td>
+            <td style="text-align: right; font-family: monospace; font-weight: bold; color: #059669;">
+                {{ number_format($r->total_amount, 0, ',', '.') }}
+            </td>
+        </tr>
+        @empty
+        <tr>
+            <td colspan="7" style="text-align: center; padding: 20px; color: #94a3b8;">Tidak ada data penerimaan pembayaran piutang.</td>
+        </tr>
+        @endforelse
+    </tbody>
+    <tfoot>
+        <tr class="total-row">
+            <td colspan="6" style="text-align: right; font-weight: bold; padding: 8px;">TOTAL PENERIMAAN:</td>
+            <td style="text-align: right; font-weight: bold; font-family: monospace; color: #059669; padding: 8px;">
+                Rp {{ number_format($totalReceived, 0, ',', '.') }}
+            </td>
+        </tr>
+    </tfoot>
+</table>
+@endsection
+
+@section('signatures')
+<div class="signature-box">
+    <div style="font-size: 8pt; color: #64748b;">Disiapkan Oleh:</div>
+    <div class="signature-line">{{ auth()->user()->name ?? 'Finance Staff' }}</div>
+</div>
+<div class="signature-box">
+    <div style="font-size: 8pt; color: #64748b;">Diperiksa Oleh:</div>
+    <div class="signature-line">AR Supervisor</div>
+</div>
+<div class="signature-box">
+    <div style="font-size: 8pt; color: #64748b;">Disetujui Oleh:</div>
+    <div class="signature-line">Finance Director / Owner</div>
+</div>
+@endsection
