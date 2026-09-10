@@ -1,0 +1,28 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # 1. Proteksi file sensitif dari akses browser
+    <Files ~ "^\.env">
+        Order allow,deny
+        Deny from all
+    </Files>
+
+    <Files ~ "^composer\.(json|lock)">
+        Order allow,deny
+        Deny from all
+    </Files>
+
+    <Files ~ "^package(-lock)?\.json">
+        Order allow,deny
+        Deny from all
+    </Files>
+
+    <Files ~ "\.(sqlite|db)$">
+        Order allow,deny
+        Deny from all
+    </Files>
+
+    # 2. Belokkan seluruh traffic secara internal ke folder public/
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
