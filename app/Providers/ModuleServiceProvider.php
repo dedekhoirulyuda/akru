@@ -38,6 +38,7 @@ class ModuleServiceProvider extends ServiceProvider
         'Subscription',
         'Partner',
         'Platform',
+        'Ai',
     ];
 
     public function register(): void

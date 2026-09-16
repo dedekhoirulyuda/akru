@@ -8,6 +8,8 @@
 
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
@@ -90,3 +92,274 @@
 .sidebar-transition {
     transition: width 300ms ease-in-out;
 }
+
+/* ============================================================
+   AKRU Night Mode (Dark Theme) Global System
+   Blueprint §3.1: High-contrast, clean, and legible dark mode.
+   ============================================================ */
+
+html.dark {
+    color-scheme: dark;
+}
+
+html.dark body {
+    background-color: #020617; /* slate-950 */
+    color: #f8fafc; /* slate-50 */
+}
+
+/* 1. Typography on dark backgrounds */
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark h6 {
+    color: #ffffff !important;
+}
+
+/* Page titles and primary text */
+html.dark .text-slate-900,
+html.dark .text-slate-800,
+html.dark .text-gray-900,
+html.dark .text-gray-800 {
+    color: #f8fafc !important;
+}
+
+/* Secondary / muted text */
+html.dark p.text-slate-500,
+html.dark span.text-slate-500,
+html.dark div.text-slate-500,
+html.dark label.text-slate-500,
+html.dark .text-slate-600,
+html.dark .text-gray-600 {
+    color: #94a3b8 !important; /* slate-400 */
+}
+
+html.dark .text-slate-700,
+html.dark .text-gray-700 {
+    color: #cbd5e1 !important; /* slate-300 */
+}
+
+html.dark .text-slate-400,
+html.dark .text-gray-400 {
+    color: #94a3b8 !important;
+}
+
+/* 2. Containers, Cards, Sections */
+/* Convert white cards to rich slate-900 cards in dark mode */
+html.dark .bg-white:not(.keep-white) {
+    background-color: #0f172a !important; /* slate-900 */
+    border-color: #1e293b !important; /* slate-800 */
+    color: #f1f5f9 !important;
+}
+
+/* Neutral light background panels inside cards */
+html.dark .bg-slate-50,
+html.dark .bg-slate-50\/50,
+html.dark .bg-slate-50\/75,
+html.dark .bg-slate-100,
+html.dark .bg-gray-50,
+html.dark .bg-gray-100 {
+    background-color: #1e293b !important; /* slate-800 */
+    border-color: #334155 !important; /* slate-700 */
+    color: #e2e8f0 !important;
+}
+
+/* Borders */
+html.dark .border-slate-200,
+html.dark .border-slate-100,
+html.dark .border-gray-200,
+html.dark .border-gray-100,
+html.dark .divide-slate-200 > :not([hidden]) ~ :not([hidden]),
+html.dark .divide-slate-100 > :not([hidden]) ~ :not([hidden]) {
+    border-color: #1e293b !important; /* slate-800 */
+}
+
+/* 3. Form Controls & Inputs (Inputs, Selects, Textareas) */
+html.dark input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="hidden"]),
+html.dark select,
+html.dark textarea {
+    background-color: #1e293b !important; /* slate-800 */
+    color: #ffffff !important;
+    border-color: #334155 !important; /* slate-700 */
+}
+
+html.dark input:focus,
+html.dark select:focus,
+html.dark textarea:focus {
+    background-color: #1e293b !important;
+    border-color: #3b82f6 !important; /* blue-500 */
+    outline: none;
+    box-shadow: 0 0 0 1px #3b82f6 !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+    color: #64748b !important; /* slate-500 */
+}
+
+/* Date / Month / Number picker icon visibility in dark mode */
+html.dark input[type="date"]::-webkit-calendar-picker-indicator,
+html.dark input[type="month"]::-webkit-calendar-picker-indicator,
+html.dark input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) brightness(100%);
+    cursor: pointer;
+}
+
+/* Select options */
+html.dark select option {
+    background-color: #0f172a;
+    color: #ffffff;
+}
+
+/* 4. Tables in dark mode */
+html.dark table thead tr {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+html.dark table thead th {
+    color: #cbd5e1 !important;
+}
+
+html.dark table tbody tr {
+    border-color: #1e293b !important;
+}
+
+html.dark table tbody tr:hover {
+    background-color: rgba(30, 41, 59, 0.7) !important;
+}
+
+html.dark table tbody td {
+    color: #e2e8f0;
+}
+
+/* 5. Buttons and badges in dark mode */
+html.dark button.bg-slate-800,
+html.dark a.bg-slate-800 {
+    background-color: #2563eb !important; /* vibrant blue-600 */
+    color: #ffffff !important;
+}
+
+html.dark button.bg-slate-800:hover,
+html.dark a.bg-slate-800:hover {
+    background-color: #1d4ed8 !important; /* blue-700 */
+}
+
+/* Tinted badges */
+html.dark .bg-purple-50 {
+    background-color: rgba(147, 51, 234, 0.2) !important;
+}
+html.dark .text-purple-700 {
+    color: #c084fc !important; /* purple-400 */
+}
+
+html.dark .bg-blue-50 {
+    background-color: rgba(59, 130, 246, 0.2) !important;
+}
+html.dark .text-blue-700 {
+    color: #60a5fa !important; /* blue-400 */
+}
+
+html.dark .bg-emerald-50,
+html.dark .bg-green-50 {
+    background-color: rgba(16, 185, 129, 0.2) !important;
+}
+html.dark .text-emerald-700,
+html.dark .text-green-700 {
+    color: #34d399 !important; /* emerald-400 */
+}
+
+html.dark .bg-amber-50 {
+    background-color: rgba(245, 158, 11, 0.2) !important;
+}
+html.dark .text-amber-700 {
+    color: #fbbf24 !important; /* amber-400 */
+}
+
+html.dark .bg-rose-50,
+html.dark .bg-red-50 {
+    background-color: rgba(244, 63, 94, 0.2) !important;
+}
+html.dark .text-rose-700,
+html.dark .text-red-700 {
+    color: #f87171 !important; /* red-400 */
+}
+
+/* Dropdown menus & popovers */
+html.dark [role="menu"],
+html.dark .dropdown-menu {
+    background-color: #0f172a !important;
+    border-color: #1e293b !important;
+    color: #f8fafc !important;
+}
+
+/* Sidebar Menu Font Colors in Light Mode */
+html:not(.dark) aside #sidebar-nav a {
+    color: #0f172a !important; /* Bold solid black (slate-900) */
+    font-weight: 500;
+}
+
+html:not(.dark) aside #sidebar-nav a:hover {
+    color: #000000 !important;
+    background-color: #f1f5f9 !important;
+}
+
+html:not(.dark) aside #sidebar-nav a.bg-blue-50 {
+    color: #1d4ed8 !important; /* blue-700 */
+    background-color: #eff6ff !important;
+    font-weight: 600;
+}
+
+html:not(.dark) aside #sidebar-nav a.bg-blue-600 {
+    color: #ffffff !important;
+}
+
+html:not(.dark) aside #sidebar-nav a svg {
+    color: #334155 !important;
+}
+
+html:not(.dark) aside #sidebar-nav a:hover svg {
+    color: #0f172a !important;
+}
+
+html:not(.dark) aside #sidebar-nav a.bg-blue-50 svg {
+    color: #2563eb !important;
+}
+
+html:not(.dark) aside #sidebar-nav a.bg-blue-600 svg {
+    color: #ffffff !important;
+}
+
+html:not(.dark) aside #sidebar-nav p {
+    color: #475569 !important;
+    font-weight: 700;
+}
+
+/* Sidebar Menu Font Colors in Dark Mode */
+html.dark aside #sidebar-nav a {
+    color: #f8fafc !important; /* Crisp pure white text for all menu links */
+}
+
+html.dark aside #sidebar-nav a:hover {
+    color: #ffffff !important;
+    background-color: rgba(30, 41, 59, 0.8) !important;
+}
+
+html.dark aside #sidebar-nav a.bg-blue-600,
+html.dark aside #sidebar-nav a.bg-slate-800 {
+    color: #ffffff !important;
+    background-color: #2563eb !important;
+}
+
+html.dark aside #sidebar-nav a.bg-blue-600 svg,
+html.dark aside #sidebar-nav a.bg-slate-800 svg {
+    color: #ffffff !important;
+}
+
+html.dark aside #sidebar-nav p {
+    color: #94a3b8 !important; /* Clearly readable category headings */
+}
+
+
+

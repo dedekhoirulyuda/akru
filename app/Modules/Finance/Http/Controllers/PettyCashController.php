@@ -15,7 +15,7 @@ class PettyCashController extends Controller
 {
     public function index(Request $request)
     {
-        $companyId = session('current_company_id');
+        $companyId = session('active_company_id', session('current_company_id'));
         $funds = PettyCashFund::with(['bankAccount', 'custodian', 'vouchers'])
             ->where('company_id', $companyId)
             ->get();
@@ -27,14 +27,16 @@ class PettyCashController extends Controller
 
         $bankAccounts = BankAccount::where('company_id', $companyId)->where('is_active', true)->get();
         $expenseAccounts = Account::where('company_id', $companyId)->where('type', 'expense')->get();
-        $users = User::where('company_id', $companyId)->get();
+        $users = $companyId
+            ? User::whereHas('companies', fn($q) => $q->where('companies.id', $companyId))->get()
+            : collect();
 
         return view('finance.petty_cash.index', compact('funds', 'vouchers', 'bankAccounts', 'expenseAccounts', 'users'));
     }
 
     public function storeFund(Request $request)
     {
-        $companyId = session('current_company_id');
+        $companyId = session('active_company_id', session('current_company_id'));
         $request->validate([
             'fund_name' => 'required|string|max:100',
             'bank_account_id' => 'required|exists:bank_accounts,id',
@@ -57,7 +59,7 @@ class PettyCashController extends Controller
 
     public function storeVoucher(Request $request)
     {
-        $companyId = session('current_company_id');
+        $companyId = session('active_company_id', session('current_company_id'));
         $request->validate([
             'petty_cash_fund_id' => 'required|exists:petty_cash_funds,id',
             'voucher_date' => 'required|date',
@@ -97,7 +99,7 @@ class PettyCashController extends Controller
 
     public function replenish(Request $request, $id)
     {
-        $companyId = session('current_company_id');
+        $companyId = session('active_company_id', session('current_company_id'));
         $fund = PettyCashFund::where('company_id', $companyId)->findOrFail($id);
 
         $neededAmount = $fund->imprest_amount - $fund->current_balance;

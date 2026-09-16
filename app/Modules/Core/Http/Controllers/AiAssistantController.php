@@ -87,7 +87,7 @@ class AiAssistantController extends Controller
             'is_unlimited' => ($chatLimit === null),
             'plan_name' => $company?->subscription?->plan?->name ?? 'Free Trial',
             'is_trial' => $company ? $company->isTrial() : true,
-            'engine_name' => ($company && !$company->isTrial()) ? 'Gemini / OpenAI Pro Hybrid' : 'AKRU FinLogic Core (Logic Engine)',
+            'engine_name' => ($company && !$company->isTrial()) ? 'Provider 2 (Gemini) / Provider 3 (OpenAI)' : 'Provider 1 (AKRU Native AI)',
         ];
 
         return view('core.ai.index', compact('anomalies', 'bankBalance', 'salesCount', 'totalRevenue', 'aiQuota'));
@@ -220,7 +220,7 @@ class AiAssistantController extends Controller
         $history = $request->input('history', []);
 
         // 2. OPTIONAL DEVELOPER LLM PASS-THROUGH (PAID PLANS ONLY)
-        // Free Trial strictly uses AKRU FinLogic Core to protect Gemini & OpenAI API quotas!
+        // Free Trial strictly uses Provider 1 (AKRU Native) to protect Gemini & OpenAI API quotas!
         $company = Company::find($companyId);
         $isTrial = $company ? $company->isTrial() : true;
 

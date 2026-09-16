@@ -34,7 +34,7 @@ class StockController extends Controller
             ->get();
 
         // 2. All items for filter
-        $items = Item::where('company_id', $companyId)->where('is_inventory', true)->get();
+        $items = Item::where('company_id', $companyId)->where('is_stockable', true)->get();
 
         // 3. Stock Movements (Kartu Stok)
         $movementsQuery = StockMovement::with(['item', 'creator'])

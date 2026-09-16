@@ -24,5 +24,6 @@ return [
         'Reporting'    => ['enabled' => true, 'priority' => 14],
         'Subscription' => ['enabled' => true, 'priority' => 15],
         'Partner'      => ['enabled' => true, 'priority' => 16],
+        'Ai'           => ['enabled' => true, 'priority' => 17],
     ],
 ];

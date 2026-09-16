@@ -131,7 +131,7 @@ class TaxControlController extends Controller
         // Fetch Fiscal Corrections
         $corrections = FiscalCorrection::with('account')
             ->where('company_id', $companyId)
-            ->where('tax_year', $taxYear)
+            ->where('fiscal_year', $taxYear)
             ->get();
 
         $positiveCorrections = $corrections->where('correction_type', 'positive');
@@ -179,7 +179,7 @@ class TaxControlController extends Controller
 
         FiscalCorrection::create([
             'company_id' => $companyId,
-            'tax_year' => $validated['tax_year'],
+            'fiscal_year' => $validated['tax_year'],
             'account_id' => $validated['account_id'],
             'correction_type' => $validated['correction_type'],
             'category' => $validated['category'],

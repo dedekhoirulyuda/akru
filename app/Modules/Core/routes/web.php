@@ -52,9 +52,4 @@ Route::middleware(['web', 'auth', \App\Http\Middleware\TenantResolver::class])->
 
     // Branches & Warehouses
     Route::resource('branches', \App\Modules\Core\Http\Controllers\BranchController::class);
-
-    // AKRU AI Assistant & Automation
-    Route::get('/ai/assistant', [\App\Modules\Core\Http\Controllers\AiAssistantController::class, 'index'])->name('ai.index');
-    Route::get('/ai/suggest-category', [\App\Modules\Core\Http\Controllers\AiAssistantController::class, 'suggestCategory'])->name('ai.suggest-category');
-    Route::post('/ai/chat', [\App\Modules\Core\Http\Controllers\AiAssistantController::class, 'chat'])->name('ai.chat');
 });

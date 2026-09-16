@@ -14,14 +14,26 @@ class FiscalCorrection extends Model
 
     protected $fillable = [
         'company_id',
-        'tax_year',
+        'fiscal_year',
+        'tax_year', // Supported via mutator
         'account_id',
         'correction_type', // positive, negative
         'amount',
         'category',
         'description',
+        'legal_basis',
         'created_by',
     ];
+
+    public function getTaxYearAttribute(): ?int
+    {
+        return $this->attributes['fiscal_year'] ?? null;
+    }
+
+    public function setTaxYearAttribute($value): void
+    {
+        $this->attributes['fiscal_year'] = $value;
+    }
 
     protected $casts = [
         'amount' => 'decimal:2',

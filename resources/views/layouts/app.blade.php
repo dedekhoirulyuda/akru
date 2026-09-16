@@ -21,12 +21,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    {{-- Anti-FOUC Theme Script --}}
+    <script>
+        if (localStorage.getItem('akru_theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
     {{-- Styles --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @stack('styles')
 </head>
-<body class="h-full bg-gray-50 font-sans antialiased" x-data="{ sidebarOpen: true, mobileMenuOpen: false }" x-cloak>
+<body class="h-full bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased" x-data="{ sidebarOpen: true, mobileMenuOpen: false }" x-cloak>
 
     {{-- Offline Status Banner --}}
     <div id="offline-banner" class="hidden fixed top-0 inset-x-0 z-50 bg-amber-500 text-white text-center text-sm py-1.5 font-medium">
@@ -49,12 +58,16 @@
     </div>
     @endif
 
-    <div class="flex h-full">
+    <div class="flex h-full overflow-hidden" 
+         @keydown.window.escape="$store.aiChat && $store.aiChat.close()"
+         @keydown.window.ctrl.slash.prevent="$store.aiChat && $store.aiChat.toggle()"
+         @keydown.window.meta.slash.prevent="$store.aiChat && $store.aiChat.toggle()"
+         @open-akru-ai.window="$store.aiChat && $store.aiChat.open()">
         {{-- Sidebar --}}
         @include('components.sidebar')
 
-        {{-- Main Content Area --}}
-        <div class="flex-1 flex flex-col min-w-0">
+        {{-- Main Content Area (Automatically shrinks when AI chat panel opens on desktop) --}}
+        <div class="flex-1 flex flex-col min-w-0 overflow-hidden transition-all duration-150">
             {{-- Top Bar --}}
             @include('components.topbar')
 
@@ -87,15 +100,15 @@
 
         {{-- Right Drawer (detail, activity, AI suggestion) --}}
         @stack('drawer')
+
+        {{-- Antigravity Resizable AI Chat Panel (Split View & Resizable) --}}
+        @include('components.ai-chat-modal')
     </div>
 
     {{-- Sync Status Indicator --}}
     <div id="sync-status" class="fixed bottom-4 left-4 z-40">
         {{-- Populated by JS --}}
     </div>
-
-    {{-- Floating AKRU AI Chat Dialog Modal --}}
-    @include('components.ai-chat-modal')
 
     @stack('scripts')
 
